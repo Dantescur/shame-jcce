@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+import logo from "../../assets/logo-jcce.png";
+import Chevroon from "./Chevroon.astro";
+import Search from "./Search.astro";
+---
+
+<header
+  class="p-2 text-white shadow-md bg-bluehead fixed top-0 left-0 w-full transition-colors duration-300 z-10"
+>
+  <div class="container-fluid flex items-center justify-between mx-auto">
+    <!-- Logo -->
+    <a href="/" class="cursor-pointer">
+      <Image
+        class="hover:animate-pulse"
+        src={logo}
+        loading={"eager"}
+        alt="Logo JCce"
+        class="w-24 h-24 sm:w-24 sm:h-24"
+      />
+    </a>
+
+    <!-- Navigation -->
+    <nav class="text-sm">
+      <ul class="hidden md:flex items-center space-x-4">
+        <li><a href="/nosotros" class="hover:underline">¿QUIÉNES SOMOS?</a></li>
+        <li>
+          <a href="/servicios" class="flex items-center hover:underline">
+            <span>SERVICIOS</span>
+            <Chevroon />
+          </a>
+        </li>
+        <li><a href="/noticias" class="hover:underline">NOTICIAS</a></li>
+        <li><a href="/atencion" class="hover:underline">ATENCIÓN</a></li>
+        <li><a href="/tienda" class="hover:underline">TIENDA VIRTUAL</a></li>
+        <li><Search /></li>
+      </ul>
+
+      <!-- Hamburger Menu for Smaller Screens -->
+      <button
+        id="menu-toggle"
+        class="md:hidden flex items-center p-2 focus:outline-none"
+        aria-label="Open menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden flex-col space-y-4 mt-2 text-center bg-bluehead text-white p-4 shadow-md"
+  >
+    <a href="/nosotros" class="hover:underline">¿QUIÉNES SOMOS?</a>
+    <a href="/servicios" class="hover:underline">SERVICIOS</a>
+    <a href="/noticias" class="hover:underline">NOTICIAS</a>
+    <a href="/atencion" class="hover:underline">ATENCIÓN</a>
+    <a href="/tienda" class="hover:underline">TIENDA VIRTUAL</a>
+    <Search />
+  </div>
+</header>
+
+<script lang="ts">
+  // Debounce function for optimized scroll handling
+  const debounce = (func, wait) => {
+    let timeout;
+    return () => {
+      clearTimeout(timeout);
+      timeout = window.setTimeout(() => func(), wait);
+    };
+  };
+
+  // Scroll event handler for dynamic header background
+  const handleScroll = () => {
+    const header = document.querySelector("header");
+    if (header) {
+      if (window.scrollY > 50) {
+        header.classList.add("bg-gray-800");
+      } else {
+        header.classList.remove("bg-gray-800");
+      }
+    }
+  };
+
+  // Menu toggle for mobile
+  const toggleMenu = () => {
+    const mobileMenu = document.getElementById("mobile-menu");
+    if (mobileMenu) {
+      mobileMenu.classList.toggle("hidden");
+    }
+  };
+
+  // Add event listeners
+  document.addEventListener("scroll", debounce(handleScroll, 100));
+  const menuToggle = document.getElementById("menu-toggle");
+  if (menuToggle) {
+    menuToggle.addEventListener("click", toggleMenu);
+  }
+</script>
