@@ -1,14 +1,16 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import sitemap from '@astrojs/sitemap';
+import sitemap from "@astrojs/sitemap";
 
-import playformCompress from '@playform/compress';
+import playformCompress from "@playform/compress";
 
-import tailwind from '@astrojs/tailwind';
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://localhost:4321/',
-  integrations: [sitemap(), tailwind(), playformCompress() ]
+  site: "https://dantescur.github.io",
+  base: "shame-jcce",
+  integrations: [sitemap(), tailwind(), playformCompress()],
 });
+
