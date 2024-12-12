@@ -3,9 +3,6 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
-      backgroundImage: {
-        hero: "url('/mnt/devdisk/MiSpace/work/shame-jcce/src/assets/banner-del-sitio-ssp2.png')",
-      },
       screens: {
         sm: "480px",
         md: "768px",
