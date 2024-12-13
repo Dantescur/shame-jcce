@@ -1,9 +1,16 @@
 ---
+import { Image } from "astro:assets";
 import banner from "../../assets/banner-del-sitio-ssp2.png";
+// style={`height: 400px; background-image: url('${banner.src}')`}
 ---
 
-<main
-  class="bg-cover bg-center bg-no-repeat w-full mb-4"
-  style={`height: 400px; background-image: url('${banner.src}')`}
->
+<main class="w-full mb-4">
+  <Image
+    layout="full-width"
+    src={banner}
+    alt={"aniversary 36"}
+    loading={"eager"}
+    width={1150}
+    height={400}
+  />
 </main>
