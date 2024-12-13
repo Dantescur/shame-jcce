@@ -8,30 +8,48 @@ interface Props {
   subtitle: string;
   lowsubtitle: string;
   link: string;
+  load: "eager" | "lazy" | null | undefined;
 }
 
-const { image, title, subtitle, lowsubtitle, link } = Astro.props;
+const { image, title, subtitle, lowsubtitle, link, load } = Astro.props;
 ---
 
 <div
   class="max-w-xs w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 invisible"
   id="to-animate"
+  aria-labelledby="card-title"
+  role="region"
+  aria-describedby="card-subtitle card-lowsubtitle"
 >
-  <a href={link}>
-    <Image class="w-full h-40 object-cover" src={image} alt={title} />
+  <a href={link} aria-label={`Go to details for ${title}`}>
+    <Image
+      class="w-full h-40 object-cover"
+      src={image}
+      alt={title}
+      loading={load}
+      layout="responsive"
+    />
   </a>
   <div class="p-4">
-    <a href={link}>
-      <h5 class="text-lg font-semibold text-gray-900 truncate">
+    <a href={link} aria-labelledby="card-title">
+      <h5
+        aria-labelledby="card-title-sub"
+        id="card-title"
+        class="text-lg font-semibold text-gray-900 truncate"
+      >
         {subtitle}
       </h5>
     </a>
-    <p class="mt-2 text-sm text-black line-clamp-2">
+    <p id="card-subtitle" class="mt-2 text-sm text-black line-clamp-2">
+      {subtitle}
+    </p>
+    <p id="card-lowsubtitle" class="mt-2 text-sm text-gray-600 line-clamp-2">
       {lowsubtitle}
     </p>
     <div class="mt-4">
       <a
         href={link}
+        aria-label={`Read more about ${title}`}
         class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700 transition-colors"
       >
         Saber más
