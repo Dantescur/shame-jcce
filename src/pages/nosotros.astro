@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import quienesSomos from "../assets/Quienes-Somos.jpg";
+---
+
+<Layout>
+  <section
+    class="relative w-full h-96 bg-fixed bg-contain bg-no-repeat bg-center"
+    style={`background-image: url(${quienesSomos.src})`}
+  >
+    <div class="absolute inset-0"></div>
+    <div class="relative max-w-1xl mx-auto px-4 py-10 text-white"></div>
+  </section>
+
+  <section class="bg-white w-full">
+    <div class="max-w-3xl mx-auto px-4 py-16 text-gray-800">
+      <h2 class="text-3xl font-slab mb-6 text-center">¿Quiénes somos?</h2>
+
+      <!-- Collapsible Sections -->
+      <div
+        x-data="{ expanded: false }"
+        class="border border-gray-200 rounded-lg shadow-md mb-4"
+      >
+        <button
+          @click="expanded = ! expanded"
+          class="w-full text-left px-4 py-3 bg-gray-100 font-medium hover:bg-gray-200 focus:outline-none"
+        >
+          ¿Qué hacemos?
+        </button>
+        <div
+          x-show="expanded"
+          x-collapse.duration.1000ms
+          class="px-4 py-3 bg-white"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor,
+          nulla ut malesuada consectetur, sem eros luctus mauris, at tincidunt
+          erat felis vel justo.
+        </div>
+      </div>
+
+      <div class="border border-gray-200 rounded-lg shadow-md mb-4">
+        <button
+          class="w-full text-left px-4 py-3 bg-gray-100 font-medium hover:bg-gray-200 focus:outline-none"
+        >
+          Nuestra historia
+        </button>
+        <div x-collapse class="px-4 py-3 bg-white">
+          Aliquam erat volutpat. Cras vehicula tortor sit amet ipsum pulvinar,
+          nec venenatis nunc feugiat. Aenean quis magna euismod, convallis purus
+          sit amet, elementum magna.
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
