@@ -14,4 +14,7 @@ export default defineConfig({
   site: "https://dantescur.github.io",
   base: "shame-jcce",
   integrations: [sitemap(), tailwind(), alpinejs(), playformCompress()],
+  experimental: {
+    responsiveImages: true,
+  },
 });
