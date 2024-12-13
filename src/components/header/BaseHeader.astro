@@ -16,23 +16,37 @@ import Search from "./Search.astro";
         src={logo}
         loading={"eager"}
         alt="Logo JCce"
-        class="w-24 h-24 sm:w-24 sm:h-24"
+        class="sm:w-24 sm:h-20"
       />
     </a>
 
     <!-- Navigation -->
     <nav class="text-sm">
       <ul class="hidden md:flex items-center space-x-4">
-        <li><a href="/nosotros" class="hover:underline">¿QUIÉNES SOMOS?</a></li>
         <li>
-          <a href="/servicios" class="flex items-center hover:underline">
+          <a href="/shame-jcce/nosotros" class="hover:underline"
+            >¿QUIÉNES SOMOS?</a
+          >
+        </li>
+        <li>
+          <a
+            href="/shame-jcce/servicios"
+            class="flex items-center hover:underline"
+          >
             <span>SERVICIOS</span>
             <Chevroon />
           </a>
         </li>
-        <li><a href="/noticias" class="hover:underline">NOTICIAS</a></li>
-        <li><a href="/atencion" class="hover:underline">ATENCIÓN</a></li>
-        <li><a href="/tienda" class="hover:underline">TIENDA VIRTUAL</a></li>
+        <li>
+          <a href="/shame-jcce/noticias" class="hover:underline">NOTICIAS</a>
+        </li>
+        <li>
+          <a href="/shame-jcce/atencion" class="hover:underline">ATENCIÓN</a>
+        </li>
+        <li>
+          <a href="/shame-jcce/tienda" class="hover:underline">TIENDA VIRTUAL</a
+          >
+        </li>
         <li><Search /></li>
       </ul>
 
@@ -64,17 +78,16 @@ import Search from "./Search.astro";
     id="mobile-menu"
     class="hidden md:hidden flex-col space-y-4 mt-2 text-center bg-bluehead text-white p-4 shadow-md"
   >
-    <a href="/nosotros" class="hover:underline">¿QUIÉNES SOMOS?</a>
-    <a href="/servicios" class="hover:underline">SERVICIOS</a>
-    <a href="/noticias" class="hover:underline">NOTICIAS</a>
-    <a href="/atencion" class="hover:underline">ATENCIÓN</a>
-    <a href="/tienda" class="hover:underline">TIENDA VIRTUAL</a>
+    <a href="/shame-jcce/nosotros" class="hover:underline">¿QUIÉNES SOMOS?</a>
+    <a href="/shame-jcce/servicios" class="hover:underline">SERVICIOS</a>
+    <a href="/shame-jcce/noticias" class="hover:underline">NOTICIAS</a>
+    <a href="/shame-jcce/atencion" class="hover:underline">ATENCIÓN</a>
+    <a href="/shame-jcce/tienda" class="hover:underline">TIENDA VIRTUAL</a>
     <Search />
   </div>
 </header>
 
 <script lang="ts">
-  // Debounce function for optimized scroll handling
   const debounce = (func, wait) => {
     let timeout;
     return () => {
@@ -83,7 +96,6 @@ import Search from "./Search.astro";
     };
   };
 
-  // Scroll event handler for dynamic header background
   const handleScroll = () => {
     const header = document.querySelector("header");
     if (header) {
@@ -95,7 +107,6 @@ import Search from "./Search.astro";
     }
   };
 
-  // Menu toggle for mobile
   const toggleMenu = () => {
     const mobileMenu = document.getElementById("mobile-menu");
     if (mobileMenu) {
@@ -103,7 +114,6 @@ import Search from "./Search.astro";
     }
   };
 
-  // Add event listeners
   document.addEventListener("scroll", debounce(handleScroll, 100));
   const menuToggle = document.getElementById("menu-toggle");
   if (menuToggle) {
