@@ -14,18 +14,19 @@ const { image, title, subtitle, lowsubtitle, link } = Astro.props;
 ---
 
 <div
-  class="max-w-xs w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+  class="max-w-xs w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 invisible"
+  id="to-animate"
 >
   <a href={link}>
     <Image class="w-full h-40 object-cover" src={image} alt={title} />
   </a>
   <div class="p-4">
     <a href={link}>
-      <h5 class="text-lg font-semibold text-gray-900 dark:text-white truncate">
+      <h5 class="text-lg font-semibold text-gray-900 truncate">
         {subtitle}
       </h5>
     </a>
-    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+    <p class="mt-2 text-sm text-black line-clamp-2">
       {lowsubtitle}
     </p>
     <div class="mt-4">
@@ -52,3 +53,30 @@ const { image, title, subtitle, lowsubtitle, link } = Astro.props;
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll("#to-animate");
+    if (cards) {
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const card = entry.target;
+              card.classList.remove("invisible");
+              card.classList.add(
+                "animate-fade-up",
+                "animate-once",
+                "animate-ease-in-out"
+              );
+              observer.unobserve(card);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      cards.forEach((card) => observer.observe(card));
+    }
+  });
+</script>
