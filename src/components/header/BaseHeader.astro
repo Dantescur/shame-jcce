@@ -6,17 +6,18 @@ import Search from "./Search.astro";
 ---
 
 <header
-  class="p-2 text-white shadow-md bg-bluehead fixed top-0 left-0 w-full transition-colors duration-300 z-10"
+  class="sticky top-0 z-10 p-2 text-white shadow-md bg-bluehead w-full transition-colors duration-300"
 >
-  <div class="container-fluid flex items-center justify-between mx-auto">
+  <div
+    class="container-fluid flex items-center justify-between mx-auto max-w-screen-xl"
+  >
     <!-- Logo -->
-    <a href="/shame-jcce" class="cursor-pointer">
+    <a href="/shame-jcce" class="flex-shrink-0">
       <Image
-        class="hover:animate-pulse"
         src={logo}
-        loading={"eager"}
         alt="Logo JCce"
-        class="sm:w-24 sm:h-20"
+        loading="eager"
+        class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-contain"
       />
     </a>
 
@@ -50,7 +51,6 @@ import Search from "./Search.astro";
         <li><Search /></li>
       </ul>
 
-      <!-- Hamburger Menu for Smaller Screens -->
       <button
         id="menu-toggle"
         class="md:hidden flex items-center p-2 focus:outline-none"
@@ -73,7 +73,6 @@ import Search from "./Search.astro";
     </nav>
   </div>
 
-  <!-- Mobile Menu -->
   <div
     id="mobile-menu"
     class="hidden md:hidden flex-col space-y-4 mt-2 text-center bg-bluehead text-white p-4 shadow-md"
