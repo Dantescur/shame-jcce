@@ -73,7 +73,7 @@ const { image, title, subtitle, lowsubtitle, link, load } = Astro.props;
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const cards = document.querySelectorAll("#to-animate");
     if (cards) {
       const observer = new IntersectionObserver(
