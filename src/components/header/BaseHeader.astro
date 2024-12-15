@@ -1,12 +1,27 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../../assets/logo-jcce.png";
-import Chevroon from "./Chevroon.astro";
-import Search from "./Search.astro";
+import MobileMenu from "./MobileMenu.astro";
+import Icon from "astro-iconify";
+
+const navLinks = [
+  { label: "HOME", href: "/shame-jcce/" },
+  { label: "¿QUIÉNES SOMOS?", href: "/shame-jcce/nosotros" },
+  { label: "SERVICIOS", href: "/shame-jcce/servicios", hasChevroon: true },
+  { label: "NOTICIAS", href: "/shame-jcce/noticias" },
+  { label: "ATENCIÓN", href: "/shame-jcce/atencion" },
+  { label: "TIENDA VIRTUAL", href: "/shame-jcce/tienda" },
+];
+
+const currentPath = Astro.url.pathname;
+const filteredLinks = navLinks.filter((link) => link.href !== currentPath);
 ---
 
 <header
   class="sticky top-0 z-10 p-2 text-white shadow-md bg-bluehead w-full transition-colors duration-300"
+  x-data="{ isMenuOpen: false, scrolled: false }"
+  @scroll.window="scrolled = (window.scrollY > 40) ? true : false"
+  :class="scrolled ? 'bg-bluestrong' : ''"
 >
   <div
     class="container-fluid flex items-center justify-between mx-auto max-w-screen-xl"
@@ -24,37 +39,36 @@ import Search from "./Search.astro";
     <!-- Navigation -->
     <nav class="text-sm">
       <ul class="hidden md:flex items-center space-x-4">
+        {
+          filteredLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class={`hover:underline flex items-center space-x-1 ${
+                  link.hasChevroon ? "group" : ""
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.hasChevroon && (
+                  <span class="group-hover:translate-x-1 transition-transform">
+                    <Icon name="mdi:chevron-down" class="h-6 w-6" />
+                  </span>
+                )}
+              </a>
+            </li>
+          ))
+        }
         <li>
-          <a href="/shame-jcce/nosotros" class="hover:underline"
-            >¿QUIÉNES SOMOS?</a
-          >
+          <Icon name="mdi:magnify" class="h-6 w-6" />
         </li>
-        <li>
-          <a
-            href="/shame-jcce/servicios"
-            class="flex items-center hover:underline"
-          >
-            <span>SERVICIOS</span>
-            <Chevroon />
-          </a>
-        </li>
-        <li>
-          <a href="/shame-jcce/noticias" class="hover:underline">NOTICIAS</a>
-        </li>
-        <li>
-          <a href="/shame-jcce/atencion" class="hover:underline">ATENCIÓN</a>
-        </li>
-        <li>
-          <a href="/shame-jcce/tienda" class="hover:underline">TIENDA VIRTUAL</a
-          >
-        </li>
-        <li><Search /></li>
       </ul>
 
+      <!-- Menu Toggle Button -->
       <button
         id="menu-toggle"
         class="md:hidden flex items-center p-2 focus:outline-none"
         aria-label="Open menu"
+        @click="isMenuOpen = !isMenuOpen"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,49 +87,11 @@ import Search from "./Search.astro";
     </nav>
   </div>
 
-  <div
-    id="mobile-menu"
-    class="hidden md:hidden flex-col space-y-4 mt-2 text-center bg-bluehead text-white p-4 shadow-md"
-  >
-    <a href="/shame-jcce/nosotros" class="hover:underline">¿QUIÉNES SOMOS?</a>
-    <a href="/shame-jcce/servicios" class="hover:underline">SERVICIOS</a>
-    <a href="/shame-jcce/noticias" class="hover:underline">NOTICIAS</a>
-    <a href="/shame-jcce/atencion" class="hover:underline">ATENCIÓN</a>
-    <a href="/shame-jcce/tienda" class="hover:underline">TIENDA VIRTUAL</a>
-    <Search />
-  </div>
+  <!-- Mobile Menu -->
+  <MobileMenu isMenuOpen="isMenuOpen" links={filteredLinks} />
 </header>
 
-<script lang="ts">
-  const debounce = (func, wait) => {
-    let timeout;
-    return () => {
-      clearTimeout(timeout);
-      timeout = window.setTimeout(() => func(), wait);
-    };
-  };
-
-  const handleScroll = () => {
-    const header = document.querySelector("header");
-    if (header) {
-      if (window.scrollY > 50) {
-        header.classList.add("bg-gray-800");
-      } else {
-        header.classList.remove("bg-gray-800");
-      }
-    }
-  };
-
-  const toggleMenu = () => {
-    const mobileMenu = document.getElementById("mobile-menu");
-    if (mobileMenu) {
-      mobileMenu.classList.toggle("hidden");
-    }
-  };
-
-  document.addEventListener("scroll", debounce(handleScroll, 100));
-  const menuToggle = document.getElementById("menu-toggle");
-  if (menuToggle) {
-    menuToggle.addEventListener("click", toggleMenu);
+<style>
+  .bg-blue-800 {
   }
-</script>
+</style>

@@ -1,55 +1,94 @@
 ---
+export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import quienesSomos from "../assets/Quienes-Somos.jpg";
+import BigImage from "../components/shared/BigImage.astro";
+
+export const title = "Nosotros";
+
+interface Nosotros {
+  heading: string;
+  body: string;
+  points?: string[];
+}
+
+const nosotros: Nosotros[] = [
+  {
+    heading: "¿Quiénes Somos?",
+    body: `Los Joven Club de Computación y Electrónica (JCCE) constituyen una red de centros tecnológicos que surge el 8 de septiembre de 1987, por iniciativa de nuestro Comandante en Jefe, con el objetivo de contribuir a la socialización e informatización de la sociedad cubana.
+    La idea surge durante una exposición organizada por las Brigadas Técnicas Juveniles (BTJ), en el verano de 1987 en el capitalino Pabellón Cuba. Una vez terminada la exposición, se evaluó ampliar el proyecto y extenderlo al resto del país. Surgen así, el 8 de septiembre de 1987, en reunión con el Buró Nacional de la Unión de Jóvenes Comunistas (UJC) con la misión de proporcionar una cultura informática a la comunidad con prioridad hacia niños y jóvenes, desempeñando un papel activo, creativo y de formación de valores en el proceso de informatización de la sociedad cubana.`,
+  },
+  {
+    heading: "¿Qué Hacemos?",
+    body: `Los Joven Club de Computación y Electrónica permiten al usuario desplegar proyectos personales, ejercitar conocimientos con alguna herramienta informática, desarrollar habilidades en el aprendizaje de idioma, mecanografía, entre otras materias con el uso de plataformas interactivas, acceder a la red, jugar, ver videos y televisión utilizando la señal digital, entre otras opciones. Todas estas actividades pueden ser auxiliadas, en caso de tener necesidad, por un especialista de la instalación.Nuestros servicios se cobran a empresas, entidades y particulares, para la población siguen siendo gratis excepto por el tiempo de máquina y la venta del Segurmática Antivirus.
+    La convocatoria a concursos informáticos, históricos y de otra índole, a festivales de corte recreativo, cultural, didáctico, de servicios; los campeonatos deportivos digitales, las peñas, tertulias, entre otros complementan una amplia diversidad de acciones dirigidas a interactuar y favorecer el desarrollo comunitario.
+    En todos nuestros servicios hay una atención personalizada a los diversos sectores sociales, atendiendo a características y posibilidades de cada uno de ellos, así niños, jóvenes, adultos, adultos mayores, personas con discapacidad, desvinculados laborales, amas de casas y otros tienen programas de atención diferenciados que procuran satisfacer su demanda y contribuir a su desarrollo personal.`,
+  },
+  {
+    heading: "Actualidad",
+    body: `Más de 30 años han transcurrido y hoy la institución cuenta con 30 instalaciones, distribuidas en la Dirección Provincial, un Joven Club Móvil y 28 centros, conectados en red, que están presentes en todos los municipios de la provincia. Además, continuamos perfeccionando nuestra obra, trabajando por: 
+    `,
+    points: [
+      "Ser entidad referencial dentro del proceso de informatización de la sociedad cubana, desempeñando un papel determinante en la vida sociocultural de la comunidad.",
+      "Lograr un elevado índice de eficiencia y alto nivel de profesionalidad en los servicios que se prestan con una alta adaptabilidad a los entornos de desarrollo.",
+      "Constituir una entidad agradable para sus trabajadores, donde se sientan valorados, facultados y con posibilidades de desarrollo individual.",
+      "Perfeccionar constantemente todo el proceso de trabajo, fomentando la cohesión entre todos los factores integrantes.",
+      "Vencer la resistencia al cambio, convirtiendo a todos los trabajadores en agentes activos del cambio.",
+      "Elevar la identificación de los trabajadores con la misión y los objetivos de la organización que garanticen una alta estabilidad de la fuerza laboral.",
+      "Desarrollar una cultura de dirección colegiada con un elevado concepto de la interoperatividad entre las distintas áreas de manera que estas se sientan clientes entre sí.",
+    ],
+  },
+];
 ---
 
-<Layout>
-  <section
-    class="relative w-full h-96 bg-fixed bg-contain bg-no-repeat bg-center"
-    style={`background-image: url(${quienesSomos.src})`}
-  >
-    <div class="absolute inset-0"></div>
-    <div class="relative max-w-1xl mx-auto px-4 py-10 text-white"></div>
-  </section>
-
-  <section class="bg-white w-full">
-    <div class="max-w-3xl mx-auto px-4 py-16 text-gray-800">
-      <h2 class="text-3xl font-slab mb-6 text-center">¿Quiénes somos?</h2>
-
-      <!-- Collapsible Sections -->
-      <div
-        x-data="{ expanded: false }"
-        class="border border-gray-200 rounded-lg shadow-md mb-4"
-      >
-        <button
-          @click="expanded = ! expanded"
-          class="w-full text-left px-4 py-3 bg-gray-100 font-medium hover:bg-gray-200 focus:outline-none"
-        >
-          ¿Qué hacemos?
-        </button>
-        <div
-          x-show="expanded"
-          x-collapse.duration.1000ms
-          class="px-4 py-3 bg-white"
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor,
-          nulla ut malesuada consectetur, sem eros luctus mauris, at tincidunt
-          erat felis vel justo.
-        </div>
-      </div>
-
-      <div class="border border-gray-200 rounded-lg shadow-md mb-4">
-        <button
-          class="w-full text-left px-4 py-3 bg-gray-100 font-medium hover:bg-gray-200 focus:outline-none"
-        >
-          Nuestra historia
-        </button>
-        <div x-collapse class="px-4 py-3 bg-white">
-          Aliquam erat volutpat. Cras vehicula tortor sit amet ipsum pulvinar,
-          nec venenatis nunc feugiat. Aenean quis magna euismod, convallis purus
-          sit amet, elementum magna.
-        </div>
-      </div>
+<Layout title={title}>
+  <section class="relative h-96">
+    <div class="">
+      <BigImage
+        image={quienesSomos}
+        alt="imagen del equipo"
+        width={1150}
+        height={400}
+      />
     </div>
+
+    <section class="relative bg-white w-full z-10">
+      <div class="max-w-3xl mx-auto px-4 py-16 text-gray-800">
+        <h2 class="text-3xl font-slab mb-6 text-center">¿Quiénes somos?</h2>
+
+        <div
+          x-data={`{ expanded: null, nosotros: ${JSON.stringify(nosotros)} }`}
+        >
+          <template x-for="(us, index) in nosotros" :key="index">
+            <div class="border border-gray-200 rounded-lg shadow-md mb-4">
+              <button
+                x-bind:class="{
+                'bg-gray-100 text-gray-900': expanded !== index,
+                'bg-blue-100 text-blue-900': expanded === index,
+              }"
+                x-on:click="expanded = expanded === index ? null : index"
+                class="w-full text-left px-4 py-3 bg-gray-100 font-medium hover:bg-blue-100 hover:text-blue-900 focus:outline-none"
+              >
+                <span x-text="us.heading"></span>
+              </button>
+              <div
+                x-show="expanded === index"
+                x-transition
+                class="px-4 py-3 bg-white"
+              >
+                <p x-text="us.body"></p>
+                <template x-if="us.points">
+                  <ul class="list-disc pl-6">
+                    <template x-for="(point, i) in us.points" :key="i">
+                      <li x-text="point"></li>
+                    </template>
+                  </ul>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
   </section>
 </Layout>

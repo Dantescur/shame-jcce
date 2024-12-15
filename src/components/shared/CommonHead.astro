@@ -1,0 +1,65 @@
+---
+// CommonHead.astro
+import { SEO } from "astro-seo";
+import { ClientRouter } from "astro:transitions";
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const resolvedImageWithDomain = new URL(
+  "/shame-jcce/public/meta/dantescur-github-io.jpg",
+  Astro.site
+).toString();
+
+const makeTitle = title
+  ? `${title} - Intranet Sancti Spíritus`
+  : "Intranet Sancti Spíritus";
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/shame-jcce/favicon.png" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta name="generator" content={Astro.generator} />
+  <SEO
+    title={makeTitle}
+    ,
+    description={description ||
+      "Joven Club tiene como misión, proporcionar a la sociedad servicios y productos relacionados con las tecnologías de la información, las comunicaciones y la electrónica."}
+    canonical={canonicalURL}
+    openGraph={{
+      basic: {
+        url: canonicalURL,
+        type: "website",
+        title: `Intranet Sancti Spiritus`,
+        image: resolvedImageWithDomain,
+      },
+      image: {
+        alt: "joven club",
+      },
+    }}
+    twitter={{
+      creator: "@Dani_BS_cu",
+    }}
+    extend={{
+      link: [{ rel: "icon", href: "/favicon.ico" }],
+      meta: [
+        {
+          name: "twitter:image",
+          content:
+            "https://pbs.twimg.com/profile_images/1469171633990553603/KFtnBCU5_400x400.jpg",
+        },
+        { name: "twitter:title", content: "Daniel Vue Developer" },
+        { name: "twitter:description", content: "Agent" },
+      ],
+    }}
+  />
+  <ClientRouter />
+</head>

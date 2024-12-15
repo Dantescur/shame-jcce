@@ -1,0 +1,12 @@
+---
+interface Props {
+  color: string;
+  tags: string;
+}
+
+const { color, tags } = Astro.props;
+---
+
+<li style=`color: ${color}`>
+  {tags}
+</li>

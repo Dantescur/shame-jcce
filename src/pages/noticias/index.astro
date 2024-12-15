@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import fetchApi from "../../lib/strapi";
+import type { Data } from "../../interfaces/article";
+
+let articles: Data[] = [];
+try {
+  const response = await fetchApi<Data[]>({
+    endpoint: "articles",
+    wrappedByKey: "data",
+    token: import.meta.env.STRAPI_API_TOKEN,
+  });
+
+  articles = response as Data[];
+} catch (error) {
+  console.error("Failed to fetch articles:", error);
+}
+---
+
+<Layout title="Noticias">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Noticias</h1>
+
+    {
+      articles.length > 0 ? (
+        <ul class="space-y-6">
+          {articles.map((article) => (
+            <li class="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
+              <a
+                href={`/shame-jcce/noticias/${article.slug}/`}
+                class="text-2xl font-semibold text-blue-600 hover:text-blue-800"
+              >
+                {article.title}
+              </a>
+              {article.description && (
+                <p class="mt-2 text-gray-600">{article.description}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="text-center text-lg text-gray-500">
+          No articles available at this time.
+        </p>
+      )
+    }
+  </main>
+</Layout>

@@ -1,13 +1,15 @@
 ---
+export const prerender = true;
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/hero/Hero.astro";
+import BigImage from "../components/shared/BigImage.astro";
 import PromoInutil from "../components/hero/PromoInutil.astro";
 import Services from "../components/Servicios/Services.astro";
+import banner from "../assets/banner-del-sitio-ssp2.png";
 ---
 
 <Layout title="Home">
   <section class="w-full">
-    <Hero />
+    <BigImage image={banner} width={1150} height={400} alt="aniversario 36" />
     <PromoInutil />
     <Services />
   </section>

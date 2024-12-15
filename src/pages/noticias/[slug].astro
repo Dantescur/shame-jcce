@@ -1,0 +1,115 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import fetchApi from "../../lib/strapi";
+import type { Data } from "../../interfaces/article";
+import ColorBlock from "../../components/shared/ColorBlock.astro";
+import { calculateReadingTime } from "../../lib/reading";
+
+const { slug } = Astro.params;
+
+// Fetch the single article using the slug
+const article = await fetchApi<Data>({
+  endpoint: `articles`,
+  query: {
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+  },
+  populate: "*",
+  wrappedByKey: "data",
+  wrappedByList: true,
+  token: import.meta.env.STRAPI_API_TOKEN,
+});
+
+const minutesRead = calculateReadingTime(article);
+---
+
+<Layout title={article.title}>
+  <main class="prose lg:prose-xl mx-auto">
+    <article>
+      <h1 class="text-2xl font-condensed text-center my-4">
+        {article.title}
+      </h1>
+
+      <div class="flex justify-between">
+        {
+          article.description && (
+            <p class="text-lg text-gray-600 truncate">{article.description}</p>
+          )
+        }
+        {
+          minutesRead && (
+            <p class="text-lg">
+              <div class="flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  class="text-gray-600"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M11.5 3a9.5 9.5 0 0 1 9.5 9.5a9.5 9.5 0 0 1-9.5 9.5A9.5 9.5 0 0 1 2 12.5A9.5 9.5 0 0 1 11.5 3m0 1A8.5 8.5 0 0 0 3 12.5a8.5 8.5 0 0 0 8.5 8.5a8.5 8.5 0 0 0 8.5-8.5A8.5 8.5 0 0 0 11.5 4M11 7h1v5.42l4.7 2.71l-.5.87l-5.2-3z"
+                  />
+                </svg>
+                <span class="text-sm">{minutesRead}</span>
+              </div>
+            </p>
+          )
+        }
+      </div>
+
+      {
+        article.cover && (
+          <img
+            src={`http://127.0.0.1:1337${article.cover.url}`}
+            alt={article.cover.alternativeText || article.cover.caption}
+            class="mb-8 object-cover object-center w-full grayscale-[0.1] group-hover:grayscale-0 h-full rounded-md group-hover:scale-105 transition-all animate-in"
+          />
+        )
+      }
+
+      {
+        article.author && (
+          <div class="mb-4 text-sm text-gray-600">
+            <p>Por {article.author.name}</p>
+            <p>
+              Publicado {new Date(article.publishedAt).toLocaleDateString()}
+            </p>
+          </div>
+        )
+      }
+
+      {
+        article.blocks && article.blocks.length > 0 && (
+          <div class="space-y-8">
+            {article.blocks.map((block) => (
+              <div>
+                {block.title && (
+                  <h2 class="text-xl font-semibold">{block.title}</h2>
+                )}
+                {block.body && <p class="text-base">{block.body}</p>}
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        article.Text && article.Text.length > 0 && (
+          <div class="mt-8">
+            <h3 class="text-2xl font-semibold">Categorias</h3>
+            <ul class="list-none pl-6">
+              {article.Text.map((text) => (
+                <ColorBlock color={text.color} tags={text.tags} />
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </article>
+  </main>
+</Layout>

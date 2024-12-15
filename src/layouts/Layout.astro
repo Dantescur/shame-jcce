@@ -1,70 +1,75 @@
 ---
-import "@fontsource/roboto";
-import "@fontsource-variable/roboto-slab";
-import "@fontsource-variable/open-sans";
-import "@fontsource-variable/roboto-condensed";
-import { SEO } from "astro-seo";
-import BaseHeader from "../components/header/BaseHeader.astro";
+import CommonHead from "../components/shared/CommonHead.astro";
 import Footer from "../components/Footer/Footer.astro";
+import BaseHeader from "../components/header/BaseHeader.astro";
 
 export interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-
-const resolvedImageWithDomain = new URL(
-  "/shame-jcce/public/meta/dantescur-github-io.jpg",
-  Astro.site
-).toString();
-
-const makeTitle = title
-  ? `${title} - Intranet Sancti Spíritus`
-  : "Intranet Sancti Spíritus";
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/shame-jcce/favicon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="generator" content={Astro.generator} />
-    <SEO
-      title={makeTitle}
-      ,
-      description="Joven Club tiene como misión, proporcionar a la sociedad servicios y productos relacionados con las tecnologías de la información, las comunicaciones y la electrónica."
-      canonical={canonicalURL}
-      openGraph={{
-        basic: {
-          url: canonicalURL,
-          type: "website",
-          title: `Intranet Sancti Spiritus`,
-          image: resolvedImageWithDomain,
-        },
-        image: {
-          alt: "joven club",
-        },
-      }}
-       twitter={{
-        creator: "@Dani_BS_cu"
-      }}
-      extend={{
-        link: [{ rel: "icon", href: "/favicon.ico" }],
-        meta: [
-          {
-            name: "twitter:image",
-            content: "https://pbs.twimg.com/profile_images/1469171633990553603/KFtnBCU5_400x400.jpg"
-          },
-          { name: "twitter:title", content: "Daniel Vue Developer" },
-      { name: "twitter:description", content: "Agent" },
-        ]
-      }}
-    />
-  </head>
+  <CommonHead title={title} description={description} />
+
+  <style is:global>
+    :root {
+    }
+    body {
+      background-color: theme(colors.gray.50);
+    }
+    .animate-in {
+      animation: animate-in 0.5s ease-in-out;
+    }
+    /* Firefox */
+    * {
+      scrollbar-width: auto;
+      scrollbar-color: #c7c7c7 #ededed;
+    }
+
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+      width: 15px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: #ededed;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background-color: #c7c7c7;
+      border-radius: 5px;
+      border: 2px solid #ffffff;
+    }
+    @keyframes animate-in {
+      0% {
+        opacity: 0;
+        transform: translateY(1rem);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Improve Page speed */
+    /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+    img {
+      content-visibility: auto;
+    }
+  </style>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+    }
+  </style>
+
   <body class="font-sans text-gray-800 bg-gray-100 scroll-smooth">
     <!-- Header -->
     <BaseHeader />
@@ -78,19 +83,3 @@ const makeTitle = title
     <Footer />
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-  }
-</style>
-
-<style is:global>
-  /* Improve Page speed */
-  /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-  img {
-    content-visibility: auto;
-  }
-</style>
