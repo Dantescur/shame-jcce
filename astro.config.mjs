@@ -17,6 +17,7 @@ import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://nimble-kelpie-a27647.netlify.app/",
   output: "server",
 
   integrations: [
