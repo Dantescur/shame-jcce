@@ -10,11 +10,13 @@ export interface Props {
 
 const { title, description } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const siteUrl = Astro.site || "http://localhost:4321/";
+
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).toString();
 
 const resolvedImageWithDomain = new URL(
-  "/shame-jcce/public/meta/dantescur-github-io.jpg",
-  Astro.site
+  "/public/meta/dantescur-github-io.jpg",
+  siteUrl
 ).toString();
 
 const makeTitle = title
@@ -25,7 +27,7 @@ const makeTitle = title
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-  <link rel="icon" type="image/svg+xml" href="/shame-jcce/favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.png" />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <meta name="generator" content={Astro.generator} />
   <SEO

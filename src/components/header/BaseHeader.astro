@@ -5,12 +5,12 @@ import MobileMenu from "./MobileMenu.astro";
 import Icon from "astro-iconify";
 
 const navLinks = [
-  { label: "HOME", href: "/shame-jcce/" },
-  { label: "¿QUIÉNES SOMOS?", href: "/shame-jcce/nosotros" },
-  { label: "SERVICIOS", href: "/shame-jcce/servicios", hasChevroon: true },
-  { label: "NOTICIAS", href: "/shame-jcce/noticias" },
-  { label: "ATENCIÓN", href: "/shame-jcce/atencion" },
-  { label: "TIENDA VIRTUAL", href: "/shame-jcce/tienda" },
+  { label: "HOME", href: "/" },
+  { label: "¿QUIÉNES SOMOS?", href: "/nosotros" },
+  { label: "SERVICIOS", href: "/servicios", hasChevroon: true },
+  { label: "NOTICIAS", href: "/noticias" },
+  { label: "ATENCIÓN", href: "/atencion" },
+  { label: "TIENDA VIRTUAL", href: "/tienda" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -27,7 +27,7 @@ const filteredLinks = navLinks.filter((link) => link.href !== currentPath);
     class="container-fluid flex items-center justify-between mx-auto max-w-screen-xl"
   >
     <!-- Logo -->
-    <a href="/shame-jcce" class="flex-shrink-0">
+    <a href="" class="flex-shrink-0">
       <Image
         src={logo}
         alt="Logo JCce"
