@@ -1,9 +1,20 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import fetchApi from "../../lib/strapi";
 import type { Data } from "../../interfaces/article";
 
 let articles: Data[] = [];
+
+interface Args {
+  endpoint: string;
+  wrappedByKey: string;
+  token: string;
+}
+
+async function fetchApi<T>({ endpoint, wrappedByKey, token }: Args) {
+  let data;
+  return data as T;
+}
+
 try {
   const response = await fetchApi<Data[]>({
     endpoint: "articles",
