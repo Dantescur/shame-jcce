@@ -1,0 +1,23 @@
+---
+import type { Nosotros } from "@interfaces/nosotros";
+import SingleAccordion from "./SingleAccordion.astro";
+
+interface Props {
+  nosotros: Nosotros[];
+}
+
+const props = Astro.props;
+---
+
+<div class="hs-accordion-group">
+  {
+    props.nosotros.map((us, index) => (
+      <SingleAccordion
+        {index}
+        heading={us.heading}
+        body={us.body}
+        points={us.points}
+      />
+    ))
+  }
+</div>

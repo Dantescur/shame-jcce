@@ -1,0 +1,87 @@
+---
+import Card from "@components/features/servicios/Card.astro";
+
+import DentroDeJcImage from "@assets/images/dentro-de-jc.png";
+import FueraDeJcImage from "@assets/images/fuera-de-jc-1.png";
+import ServiciosMovilImage from "@assets/images/servicios-movil.png";
+import ServicioATercerosImage from "@assets/images/servicio-a-terceros.png";
+import ServiciosSocialesImage from "@assets/images/servicios-sociales.png";
+import ServiciosWebImage from "@assets/images/servicios-web.png";
+import type { Service } from "@interfaces/services";
+
+const services: Service[] = [
+  {
+    image: DentroDeJcImage,
+    title: "Dentro de JC",
+    subtitle: "Dentro de Joven Club",
+    lowsubtitle:
+      "Visítenos y conozca los servicios que se ofrecen dentro de la institución...",
+    link: "/dentro-de-joven-club",
+    load: "eager",
+  },
+  {
+    image: FueraDeJcImage,
+    title: "Fuera de JC",
+    subtitle: "Fuera de Joven Club",
+    lowsubtitle:
+      "También tiene la oportunidad de ser asistido fuera de la institución...",
+    link: "/fuera-de-joven-club",
+    load: "eager",
+  },
+  {
+    image: ServiciosMovilImage,
+    title: "Servicios Movil",
+    subtitle: "Servicios Móvil",
+    lowsubtitle:
+      "Instalación de aplicaciones, configuración y soporte con dispositivos móviles...",
+    link: "/servicios-movil",
+    load: "eager",
+  },
+  {
+    image: ServicioATercerosImage,
+    title: "Servicios a terceros",
+    subtitle: "Servicios a terceros",
+    lowsubtitle:
+      "Instalación y soporte de Segurmatica Antivirus para empresas y personas naturales.",
+    link: "/servicios-terceros",
+    load: "lazy",
+  },
+  {
+    image: ServiciosSocialesImage,
+    title: "Servicios Sociales",
+    subtitle: "Servicios Sociales",
+    lowsubtitle:
+      "Contribuimos a la formación vocacional mediante múltiples actividades...",
+    link: "/servicios-sociales",
+    load: "lazy",
+  },
+  {
+    image: ServiciosWebImage,
+    title: "Servicios Web",
+    subtitle: "Servicios Web",
+    lowsubtitle:
+      "Conozca los principales recursos web que ofrece joven club dentro de nuestra red nacional...",
+    link: "/servicios-web",
+    load: "lazy",
+  },
+];
+---
+
+<section id="servicios" class="h-auto w-full bg-gray-50 py-5">
+  <div
+    class="container mx-auto grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 justify-items-center"
+  >
+    {
+      services.map((service) => (
+        <Card
+          image={service.image}
+          title={service.title}
+          subtitle={service.subtitle}
+          lowsubtitle={service.lowsubtitle}
+          link={service.link}
+          load={service.load}
+        />
+      ))
+    }
+  </div>
+</section>

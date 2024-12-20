@@ -1,0 +1,140 @@
+---
+import { Picture } from "astro:assets";
+import logo from "../../assets/logo-jcce.png";
+import MenuOverlay from "@components/features/header/MenuOverlay.vue";
+
+const navLinks = [
+  { label: "HOME", href: "/" },
+  { label: "¿QUIÉNES SOMOS?", href: "/nosotros" },
+  { label: "SERVICIOS", href: "/servicios", hasChevroon: true },
+  { label: "NOTICIAS", href: "/noticias" },
+  { label: "ATENCIÓN", href: "/atencion" },
+  { label: "TIENDA VIRTUAL", href: "/tienda" },
+];
+
+const currentPath = Astro.url.pathname;
+const filteredLinks = navLinks.filter((link) => link.href !== currentPath);
+---
+
+<header
+  class="sticky top-0 z-10 p-2 text-white shadow-md bg-bluehead w-full transition-colors duration-300"
+  x-data="{ isMenuOpen: false, scrolled: false }"
+  @scroll.window="scrolled = (window.scrollY > 40) ? true : false"
+  :class="scrolled ? 'bg-bluestrong' : ''"
+>
+  <div
+    class="container-fluid flex items-center justify-between mx-auto max-w-screen-xl"
+  >
+    <!-- Logo -->
+    <a href="/" class="flex-shrink-0">
+      <Picture
+        formats={["avif", "webp"]}
+        src={logo}
+        alt="Logo JCce"
+        loading="eager"
+        class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-contain"
+      />
+    </a>
+
+    <!-- Navigation -->
+    <nav class="text-sm">
+      <ul class="hidden md:flex items-center space-x-4">
+        {
+          filteredLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class={`hover:underline flex items-center space-x-1 ${
+                  link.hasChevroon ? "group" : ""
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.hasChevroon && (
+                  <span class=" group-hover:translate-x-1 transition-transform">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 48 48"
+                    >
+                      <g fill="none" stroke-linejoin="round" stroke-width="4">
+                        <path
+                          fill="#2f88ff"
+                          stroke="#fff"
+                          d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"
+                        />
+                        <path
+                          stroke="#fff"
+                          stroke-linecap="round"
+                          d="M24 15V33"
+                        />
+                        <path
+                          stroke="#fff"
+                          stroke-linecap="round"
+                          d="M33 24L24 33L15 24"
+                        />
+                      </g>
+                    </svg>
+                  </span>
+                )}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
+          >
+            <g fill="none" stroke-linejoin="round" stroke-width="4">
+              <path
+                fill="#2f88ff"
+                stroke="#fff"
+                d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z"
+              ></path>
+              <path
+                stroke="#fff"
+                stroke-linecap="round"
+                d="M26.657 14.3431C25.2093 12.8954 23.2093 12 21.0001 12C18.791 12 16.791 12.8954 15.3433 14.3431"
+              ></path>
+              <path
+                stroke="#fff"
+                stroke-linecap="round"
+                d="M33.2216 33.2217L41.7069 41.707"></path>
+            </g>
+          </svg>
+        </li>
+      </ul>
+
+      <button
+        id="menu-toggle"
+        class="md:hidden flex items-center p-2 focus:outline-none"
+        aria-label="Open menu"
+        @click="isMenuOpen = !isMenuOpen; $dispatch('menu-toggle', isMenuOpen);"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <MenuOverlay isMenuOpen={false} client:load links={filteredLinks} />
+</header>
+
+<style>
+  .bg-blue-800 {
+  }
+</style>

@@ -1,55 +1,43 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import type { Data } from "../../interfaces/article";
-import ColorBlock from "../../components/shared/ColorBlock.astro";
-import { calculateReadingTime } from "../../lib/reading";
+import Layout from "layouts/Layout.astro";
+import { calculateReadingTime } from "@lib/reading";
+import { readItems } from "@directus/sdk";
+import directus from "@lib/directus";
+import { hasNameProperty } from "@utils/checkNameProperty";
 
-const { slug } = Astro.params;
+const post = Astro.props;
 
-interface Args {
-  endpoint: string;
-  wrappedByKey: string;
-  token: string;
-  query: Record<string, any>;
-  populate: string;
-  wrappedByList: boolean;
-}
-
-async function fetchApi<T>({ endpoint, wrappedByKey, token }: Args) {
-  let data;
-  return data as T;
-}
-
-// Fetch the single article using the slug
-const article = await fetchApi<Data>({
-  endpoint: `articles`,
-  query: {
-    filters: {
-      slug: {
-        $eq: slug,
-      },
+export const getStaticPaths = async () => {
+  const posts = await directus.request(
+    readItems("posts", {
+      fields: ["*", { author_id: ["name"] }],
+    })
+  );
+  return posts.map((post) => ({
+    params: {
+      slug: post.slug,
     },
-  },
-  populate: "*",
-  wrappedByKey: "data",
-  wrappedByList: true,
-  token: import.meta.env.STRAPI_API_TOKEN,
-});
+    props: post,
+  }));
+};
 
-const minutesRead = calculateReadingTime(article);
+const minutesRead = calculateReadingTime(post.content);
 ---
 
-<Layout title={article.title}>
-  <main class="prose lg:prose-xl mx-auto">
+<Layout title={post.title}>
+  <main class="prose mx-auto">
     <article>
       <h1 class="text-2xl font-condensed text-center my-4">
-        {article.title}
+        {post.title}
       </h1>
 
       <div class="flex justify-between">
         {
-          article.description && (
-            <p class="text-lg text-gray-600 truncate">{article.description}</p>
+          hasNameProperty(post.author_id) && (
+            <div class="mb-4 text-sm text-gray-600">
+              <p>Por {post.author_id.name}</p>
+              <p>Publicado {post.published_date}</p>
+            </div>
           )
         }
         {
@@ -76,50 +64,18 @@ const minutesRead = calculateReadingTime(article);
       </div>
 
       {
-        article.cover && (
+        post.imagen && (
           <img
-            src={`http://127.0.0.1:1337${article.cover.url}`}
-            alt={article.cover.alternativeText || article.cover.caption}
+            src={`http://127.0.0.1:8055/assets/${post.imagen}?width=500`}
+            alt={post.imagen.toString()}
             class="mb-8 object-cover object-center w-full grayscale-[0.1] group-hover:grayscale-0 h-full rounded-md group-hover:scale-105 transition-all animate-in"
           />
         )
       }
-
       {
-        article.author && (
-          <div class="mb-4 text-sm text-gray-600">
-            <p>Por {article.author.name}</p>
-            <p>
-              Publicado {new Date(article.publishedAt).toLocaleDateString()}
-            </p>
-          </div>
-        )
-      }
-
-      {
-        article.blocks && article.blocks.length > 0 && (
-          <div class="space-y-8">
-            {article.blocks.map((block) => (
-              <div>
-                {block.title && (
-                  <h2 class="text-xl font-semibold">{block.title}</h2>
-                )}
-                {block.body && <p class="text-base">{block.body}</p>}
-              </div>
-            ))}
-          </div>
-        )
-      }
-
-      {
-        article.Text && article.Text.length > 0 && (
-          <div class="mt-8">
-            <h3 class="text-2xl font-semibold">Categorias</h3>
-            <ul class="list-none pl-6">
-              {article.Text.map((text) => (
-                <ColorBlock color={text.color} tags={text.tags} />
-              ))}
-            </ul>
+        post.content && post.content.length > 0 && (
+          <div class="space-y-8 ">
+            {post.content && <p class="text-sm" set:html={post.content} />}
           </div>
         )
       }

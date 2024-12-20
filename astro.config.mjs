@@ -7,31 +7,46 @@ import playformCompress from "@playform/compress";
 
 import tailwind from "@astrojs/tailwind";
 
-import alpinejs from "@astrojs/alpinejs";
+import compressor from "astro-compressor";
 
-import react from "@astrojs/react";
+import node from "@astrojs/node";
 
-import markdoc from "@astrojs/markdoc";
+import vue from "@astrojs/vue";
 
-import netlify from "@astrojs/netlify";
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    domains: ["localhost"],
+  },
+
   site: "https://nimble-kelpie-a27647.netlify.app/",
-  output: "server",
+  output: "static",
 
   integrations: [
     sitemap(),
     tailwind(),
-    react(),
-    markdoc(),
-    alpinejs({ entrypoint: "./src/lib/entrypoint.ts" }),
-    playformCompress(),
+    partytown(),
+    playformCompress({
+      CSS: false,
+      HTML: true,
+      Image: false,
+      JavaScript: false,
+      SVG: true,
+    }),
+    vue({ devtools: true }),
+    compressor({
+      brotli: true,
+      gzip: false,
+    }),
   ],
 
   experimental: {
     responsiveImages: true,
   },
 
-  adapter: netlify(),
+  adapter: node({
+    mode: "standalone",
+  }),
 });

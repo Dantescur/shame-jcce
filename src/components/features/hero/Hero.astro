@@ -1,0 +1,16 @@
+---
+import { Picture } from "astro:assets";
+import banner from "@assets/images/banners/banner-del-sitio-ssp2.png";
+---
+
+<main class="w-full mb-4">
+  <Picture
+    layout="full-width"
+    src={banner}
+    formats={["avif", "webp"]}
+    alt={"aniversary 36"}
+    loading={"eager"}
+    width={1150}
+    height={400}
+  />
+</main>

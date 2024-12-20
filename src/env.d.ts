@@ -1,4 +1,7 @@
 interface ImportMetaEnv {
-  readonly STRAPI_URL: string;
-  readonly STRAPI_API_TOKEN: string;
+  readonly BUILDER_API_PUBLIC_KEY: string;
+}
+
+interface Window {
+  Alpine: import("alpinejs").Alpine;
 }
