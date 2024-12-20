@@ -39,7 +39,7 @@ type Schema = {
 };
 
 const directus = createDirectus<CustomDirectusTypes>(
-  "http://0.0.0.0:8055/"
+  "https://mature-specially-monster.ngrok-free.app"
 ).with(rest());
 
 export default directus;
