@@ -8,6 +8,12 @@
     <title>Content Manager</title>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    <!-- <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script> -->
+    <script type="module" src="/src/lib/decap.ts"></script>
+    <script>
+      // @ts-expect-error CMS is defined globally
+      CMS.registerPreviewStyle("/global.css");
+    </script>
+    <script src="../lib/preview.js"></script>
   </body>
 </html>
