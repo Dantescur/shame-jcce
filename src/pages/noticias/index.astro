@@ -1,56 +1,39 @@
 ---
 export const prerender = true;
-import Layout from "../../layouts/Layout.astro";
-import { readItems } from "@directus/sdk";
-import directus from "../../lib/directus";
 
-const posts = await directus.request(
-  readItems("posts", {
-    fields: [
-      "slug",
-      "title",
-      "published_date",
-      "content",
-      { author_id: ["name"] },
-    ],
-    sort: ["-published_date"],
-  })
-);
+import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="Noticias">
   <main class="container mx-auto px-4 py-8">
     <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Noticias</h1>
 
-    {
-      posts.length > 0 ? (
-        <ul class="space-y-6">
-          {posts.map((post) => (
-            <li class="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
-              <a
-                href={`/noticias/${post.slug}/`}
-                class="text-2xl font-semibold text-blue-600 hover:text-blue-800"
-              >
-                {post.title}
-              </a>
-              {post.published_date && (
-                <p class="mt-2 text-gray-600">
-                  {post.published_date} &bull; {post.author_id?.name}
-                </p>
-              )}
-              {post.content && post.content.length > 0 && (
-                <div class="space-y-8">
-                  {post.content && <p class="prose " set:html={post.content} />}
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p class="text-center text-lg text-gray-500">
-          No articles available at this time.
-        </p>
-      )
-    }
+    <ul class="space-y-6">
+      {
+        posts.map((post) => (
+          <li class="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300">
+            <a
+              href={`/noticias/${post.slug}/`}
+              class="text-2xl font-semibold text-blue-600 hover:text-blue-800"
+            >
+              {post.title}
+            </a>
+            {post.published_at && (
+              <p class="mt-2 text-gray-600">
+                {new Date(post.published_at).toLocaleDateString()} &bull;{" "}
+                {post.primary_author?.name}
+              </p>
+            )}
+            {post.excerpt && post.excerpt.length > 0 && (
+              <div class="space-y-8">
+                {post.html && (
+                  <Fragment set:html={post.excerpt.slice(0, 100)} />
+                )}
+              </div>
+            )}
+          </li>
+        ))
+      }
+    </ul>
   </main>
 </Layout>

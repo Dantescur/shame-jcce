@@ -1,10 +1,13 @@
-export type Authors = {
+export type Categories = {
+  description?: string | null;
   id: number;
-  name?: string | Posts | null;
+  name?: string | null;
+  slug?: string | null;
+  sort?: number | null;
 };
 
 export type DirectusAccess = {
-  id?: string | null;
+  id: string;
   policy: string | DirectusPolicies;
   role?: string | DirectusRoles | null;
   sort?: number | null;
@@ -218,7 +221,7 @@ export type DirectusPolicies = {
   description?: string | null;
   enforce_tfa: boolean;
   icon: string;
-  id?: string | null;
+  id: string;
   ip_access?: unknown | null;
   name: string;
   permissions: any[] | DirectusPermissions[];
@@ -406,30 +409,31 @@ export type DirectusWebhooks = {
   was_active_before_deprecation: boolean;
 };
 
-export type Global = {
-  description?: string | null;
-  id: number;
-  title?: string | null;
-};
-
-export type Pages = {
-  content?: string | null;
-  id: number;
-  name?: string | null;
-};
-
 export type Posts = {
-  author_id?: number | Authors | null;
-  content: string;
+  category?: number | Categories | null;
+  content?: string | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  excerpt?: string | null;
   id: number;
   imagen?: string | DirectusFiles | null;
-  published_date?: string | null;
   slug?: string | null;
-  title: string;
+  sort?: number | null;
+  status: string;
+  tags?: unknown | null;
+  title?: string | null;
+  user_created?: string | DirectusUsers | null;
+};
+
+export type Tags = {
+  id: number;
+  name?: string | null;
+  slug?: string | null;
+  sort?: number | null;
 };
 
 export type CustomDirectusTypes = {
-  authors: Authors[];
+  categories: Categories[];
   directus_access: DirectusAccess[];
   directus_activity: DirectusActivity[];
   directus_collections: DirectusCollections[];
@@ -457,7 +461,7 @@ export type CustomDirectusTypes = {
   directus_users: DirectusUsers[];
   directus_versions: DirectusVersions[];
   directus_webhooks: DirectusWebhooks[];
-  global: Global;
-  pages: Pages[];
   posts: Posts[];
+  tags: Tags[];
 };
+

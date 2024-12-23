@@ -1,27 +1,10 @@
 ---
+export const prerender = true;
 import Layout from "layouts/Layout.astro";
-import { calculateReadingTime } from "@lib/reading";
-import { readItems } from "@directus/sdk";
-import directus from "@lib/directus";
-import { hasNameProperty } from "@utils/checkNameProperty";
 
-const post = Astro.props;
+export const getStaticPaths = async () => {};
 
-export const getStaticPaths = async () => {
-  const posts = await directus.request(
-    readItems("posts", {
-      fields: ["*", { author_id: ["name"] }],
-    })
-  );
-  return posts.map((post) => ({
-    params: {
-      slug: post.slug,
-    },
-    props: post,
-  }));
-};
-
-const minutesRead = calculateReadingTime(post.content);
+const { post } = Astro.props;
 ---
 
 <Layout title={post.title}>
@@ -33,15 +16,15 @@ const minutesRead = calculateReadingTime(post.content);
 
       <div class="flex justify-between">
         {
-          hasNameProperty(post.author_id) && (
+          post.primary_author && post.published_at && (
             <div class="mb-4 text-sm text-gray-600">
-              <p>Por {post.author_id.name}</p>
-              <p>Publicado {post.published_date}</p>
+              <p>Por {post.primary_author.name}</p>
+              <p>Publicado {post.published_at}</p>
             </div>
           )
         }
         {
-          minutesRead && (
+          post.reading_time && (
             <p class="text-lg">
               <div class="flex items-center space-x-2">
                 <svg
@@ -56,7 +39,7 @@ const minutesRead = calculateReadingTime(post.content);
                     d="M11.5 3a9.5 9.5 0 0 1 9.5 9.5a9.5 9.5 0 0 1-9.5 9.5A9.5 9.5 0 0 1 2 12.5A9.5 9.5 0 0 1 11.5 3m0 1A8.5 8.5 0 0 0 3 12.5a8.5 8.5 0 0 0 8.5 8.5a8.5 8.5 0 0 0 8.5-8.5A8.5 8.5 0 0 0 11.5 4M11 7h1v5.42l4.7 2.71l-.5.87l-5.2-3z"
                   />
                 </svg>
-                <span class="text-sm">{minutesRead}</span>
+                <span class="text-sm">{post.reading_time} min read</span>
               </div>
             </p>
           )
@@ -64,18 +47,18 @@ const minutesRead = calculateReadingTime(post.content);
       </div>
 
       {
-        post.imagen && (
+        post.feature_image && (
           <img
-            src={`http://127.0.0.1:8055/assets/${post.imagen}?width=500`}
-            alt={post.imagen.toString()}
+            src={post.feature_image}
+            alt={post.title}
             class="mb-8 object-cover object-center w-full grayscale-[0.1] group-hover:grayscale-0 h-full rounded-md group-hover:scale-105 transition-all animate-in"
           />
         )
       }
       {
-        post.content && post.content.length > 0 && (
+        post.html && post.html.length > 0 && (
           <div class="space-y-8 ">
-            {post.content && <p class="text-sm" set:html={post.content} />}
+            <Fragment set:html={post.html} />
           </div>
         )
       }

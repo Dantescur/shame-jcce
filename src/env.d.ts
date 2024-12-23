@@ -1,5 +1,5 @@
 interface ImportMetaEnv {
-  readonly BUILDER_API_PUBLIC_KEY: string;
+  readonly CONTENT_API_KEY: string;
 }
 
 interface Window {

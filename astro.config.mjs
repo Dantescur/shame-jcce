@@ -11,23 +11,19 @@ import compressor from "astro-compressor";
 
 import node from "@astrojs/node";
 
-import vue from "@astrojs/vue";
-
 import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
   image: {
-    domains: ["localhost"],
+    domains: ["localhost", "5.250.184.204"],
   },
-
-  site: "https://nimble-kelpie-a27647.netlify.app/",
-  output: "static",
 
   integrations: [
     sitemap(),
     tailwind(),
     partytown(),
+
     playformCompress({
       CSS: false,
       HTML: true,
@@ -35,7 +31,6 @@ export default defineConfig({
       JavaScript: false,
       SVG: true,
     }),
-    vue({ devtools: true }),
     compressor({
       brotli: true,
       gzip: false,

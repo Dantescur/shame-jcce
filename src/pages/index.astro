@@ -1,10 +1,11 @@
 ---
+export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import banner from "@assets/images/banners/banner-del-sitio-ssp2.png";
 import BigImage from "@components/ui/BigImage.astro";
 import PromoInutil from "@components/features/hero/PromoInutil.astro";
-import CarouselSlide from "@components/features/carrousel/CarouselSlide.astro";
 import Services from "@components/features/servicios/Services.astro";
+import Latest from "@components/features/latest/Latest.astro";
 ---
 
 <Layout title="Home">
@@ -12,6 +13,6 @@ import Services from "@components/features/servicios/Services.astro";
     <BigImage image={banner} width={1150} height={400} alt="aniversario 36" />
     <PromoInutil />
     <Services />
-    <CarouselSlide />
+    <!-- <Latest /> -->
   </section>
 </Layout>

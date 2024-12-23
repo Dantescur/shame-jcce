@@ -1,8 +1,7 @@
 ---
 import Footer from "@components/layout/Footer.astro";
-import HeaderNav from "@components/layout/HeaderNav.vue";
 import CommonHead from "@components/shared/CommonHead.astro";
-import NewHeader from "@components/features/header/NewHeader.astro";
+import Header from "@components/features/header/Header.astro";
 
 export interface Props {
   title?: string;
@@ -73,8 +72,7 @@ const { title, description } = Astro.props;
 
   <body class="font-sans text-gray-800 bg-gray-100 scroll-smooth">
     <!-- Header -->
-    <!-- <HeaderNav client:load /> -->
-    <NewHeader />
+    <Header />
 
     <!-- Main content -->
     <main class="min-h-screen">
@@ -90,5 +88,6 @@ const { title, description } = Astro.props;
       });
     </script>
     <script src="../../node_modules/preline/preline.js"></script>
+    <!-- <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script> -->
   </body>
 </html>
