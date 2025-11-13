@@ -18,7 +18,7 @@
     "@fontsource-variable/roboto-slab": "^5.1.0",
     "@fontsource/roboto": "^5.1.0",
     "@playform/compress": "^0.1.6",
-    "astro": "^5.1.1",
+    "astro": "^5.15.6",
     "astro-compressor": "^1.0.0",
     "astro-seo": "^0.8.4",
     "decap-cms-app": "^3.4.0",
